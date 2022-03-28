@@ -7,7 +7,8 @@ const PRIORITY = {
   LOW: 'low',
 };
 
-const tasks = [{id: 1, title: 'Make this todo', completed: false,}];
+const tasks = [];
+let count = 1;
 
 function App() {
   return (
@@ -18,51 +19,81 @@ function App() {
   );
 }
 
-function PriorityBlock(props) {
+function PriorityBlock({ priority }) {
   const [todos, setTodos] = useState(tasks);
-  const priority = props.priority
 
-  
+  function setNewTask(newTaskTitle) {
+    const newTask = {
+      id: count,
+      title: newTaskTitle,
+      completed: false,
+    };
+    setTodos([...todos, newTask]);
+    count++;
+  }
+  function handleInputValue(targetValue) {
+    setNewTask(targetValue);
+  }
+  function onToggle(id) {
+    setTodos(
+      todos.map((todo) => {
+        if (id === todo.id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      })
+    );
+  }
   return (
     <section className="priority">
       <span className="priority__title">{priority}</span>
-      <ValueInput todos={todos}/>
+      <TodoForm onInputValue={handleInputValue} />
       <div className="todo__tasks">
-        {todos}
+        {todos.map((todo) => (
+          <TodoItem key={todo.id} todo={todo} onToggle={onToggle} />
+        ))}
       </div>
     </section>
   );
 }
-function ValueInput(props) {
-  function handleFormSubmit(e) {
+function TodoForm({ onInputValue }) {
+  const [inputValue, setInputValue] = useState('');
+
+  function handleSubmit(e) {
     e.preventDefault();
+    onInputValue(e.target[0].value);
+    setInputValue('');
   }
-  function handleInputChange(e) {
-   
+  function onChange(e) {
+    setInputValue(e.target.value);
   }
   return (
-    <form className="todo__add-task" onSubmit={handleFormSubmit}>
+    <form className="todo__add-task" onSubmit={handleSubmit}>
       <input
-        name="isDone"
         type="text"
-        value=''
         className="todo__task-value"
-        // onChange={}
         placeholder="Add task"
+        value={inputValue}
+        onChange={onChange}
       />
-      <input className="button button_add" type="submit"/>
+      <input className="button button_add" type="submit" value="" />
     </form>
   );
 }
 
-function TodoItem(props) {
+function TodoItem({ todo, onToggle }) {
+  console.log('todo', todo);
   const date = format(new Date(), 'dd.MM.yyyy');
-
+  function onChange(e) {}
   return (
     <div className="todo__task">
-      <input className="task__check-input" type="checkbox" />
+      <input
+        className="task__check-input"
+        type="checkbox"
+        onChange={() => onToggle(todo.id)}
+      />
       <span className="task__checkbox"></span>
-      <p className="task__text"></p>
+      <p className="task__text">{todo.title}</p>
       <div className="task__container">
         <span className="task__date">{date}</span>
         <button className="button button_del" type="button"></button>
@@ -70,10 +101,5 @@ function TodoItem(props) {
     </div>
   );
 }
-
-
-
-
-
 
 export default App;
