@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { format } from 'date-fns';
 import './App.css';
 
@@ -31,8 +31,8 @@ function PriorityBlock({ priority }) {
     setTodos([...todos, newTask]);
     count++;
   }
-  function handleInputValue(targetValue) {
-    setNewTask(targetValue);
+  function handleInputValue(taskValue) {
+    setNewTask(taskValue);
   }
   function onToggle(id) {
     setTodos(
@@ -44,13 +44,21 @@ function PriorityBlock({ priority }) {
       })
     );
   }
+  function handleDeleteTask(id) {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  }
   return (
     <section className="priority">
       <span className="priority__title">{priority}</span>
       <TodoForm onInputValue={handleInputValue} />
       <div className="todo__tasks">
         {todos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} onToggle={onToggle} />
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggle={onToggle}
+            onDeleteTask={handleDeleteTask}
+          />
         ))}
       </div>
     </section>
@@ -81,22 +89,29 @@ function TodoForm({ onInputValue }) {
   );
 }
 
-function TodoItem({ todo, onToggle }) {
-  console.log('todo', todo);
+function TodoItem({ todo, onToggle, onDeleteTask }) {
+  const classes = ['task__text'];
+  if (todo.completed) {
+    classes.push('todo__task_done');
+  }
   const date = format(new Date(), 'dd.MM.yyyy');
-  function onChange(e) {}
   return (
     <div className="todo__task">
       <input
         className="task__check-input"
         type="checkbox"
         onChange={() => onToggle(todo.id)}
+        checked={todo.completed}
       />
       <span className="task__checkbox"></span>
-      <p className="task__text">{todo.title}</p>
+      <p className={classes.join(' ')}>{todo.title}</p>
       <div className="task__container">
         <span className="task__date">{date}</span>
-        <button className="button button_del" type="button"></button>
+        <button
+          className="button button_del"
+          type="button"
+          onClick={() => onDeleteTask(todo.id)}
+        ></button>
       </div>
     </div>
   );
