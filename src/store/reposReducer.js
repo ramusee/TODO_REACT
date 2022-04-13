@@ -1,5 +1,6 @@
 import {ADD_TODO, REMOVE_TODO, TOGGLE_TODO} from "./actions";
 import storage from "../localStorage";
+
 const initialState = storage.getTodos()
 export default function reposReducer(state = initialState, action) {
   switch (action.type) {

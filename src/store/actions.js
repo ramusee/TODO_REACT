@@ -4,8 +4,9 @@ const ADD_TODO = 'ADD_TODO'
 const REMOVE_TODO = 'REMOVE_TODO'
 const TOGGLE_TODO = 'TOGGLE_TODO'
 
-const lastItemStorage = storage.getTodos().slice(-1)[0]
-let id = lastItemStorage ? lastItemStorage.id + 1 :  1
+console.log(storage.getTodos())
+const lastItemStorage = storage.getTodos().at(-1)
+let id = lastItemStorage ? lastItemStorage.id + 1 : 1
 
 function addTodo(title, priority) {
   return {
@@ -22,11 +23,12 @@ function removeTodo(id) {
     id
   }
 }
-function toggleTodo(id){
- return {
-   type: TOGGLE_TODO,
-   id
- }
+
+function toggleTodo(id) {
+  return {
+    type: TOGGLE_TODO,
+    id
+  }
 }
 
 export {ADD_TODO, REMOVE_TODO, TOGGLE_TODO, addTodo, removeTodo, toggleTodo};
