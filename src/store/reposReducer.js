@@ -1,18 +1,25 @@
 import {ADD_TODO, REMOVE_TODO, TOGGLE_TODO} from "./actions";
-
-export default function reposReducer(state = [], action) {
+import storage from "../localStorage";
+const initialState = storage.getTodos()
+export default function reposReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
-      return [...state, {
+      const newState = [...state, {
         id: action.id,
         priority: action.priority,
         title: action.title,
         completed: false,
       }]
+      storage.saveTodos(newState)
+      return newState
     case REMOVE_TODO:
-      return state.filter(todo => todo.id !== action.id)
+      const _newState = state.filter(todo => todo.id !== action.id)
+      storage.saveTodos(_newState)
+      return _newState
     case TOGGLE_TODO:
-      return state.map(todo => todo.id === action.id ? {...todo, completed: !todo.completed} : todo)
+      const __newState = state.map(todo => todo.id === action.id ? {...todo, completed: !todo.completed} : todo)
+      storage.saveTodos(__newState)
+      return __newState
     default:
       return state
   }

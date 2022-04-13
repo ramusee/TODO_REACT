@@ -2,7 +2,7 @@ const ADD_TODO = 'ADD_TODO'
 const REMOVE_TODO = 'REMOVE_TODO'
 const TOGGLE_TODO = 'TOGGLE_TODO'
 
-let id = 0
+let id = 1
 
 function addTodo(title, priority) {
   return {
