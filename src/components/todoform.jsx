@@ -6,6 +6,7 @@ function TodoForm({onHandleAddTodo, priority}) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if(!e.target[0].value) return
     onHandleAddTodo(e.target[0].value, priority);
     setInputValue('');
   }
