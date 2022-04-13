@@ -1,7 +1,7 @@
 import React from 'react';
-import { format } from 'date-fns';
+import {format} from 'date-fns';
 
-function TodoItem({ todo, onToggle, onDeleteTask }) {
+function TodoItem({todo, onToggle, onDeleteTask}) {
   const classes = ['task__text'];
   if (todo.completed) {
     classes.push('todo__task_done');
@@ -15,7 +15,7 @@ function TodoItem({ todo, onToggle, onDeleteTask }) {
         onChange={() => onToggle(todo.id)}
         checked={todo.completed}
       />
-      <span className="task__checkbox"></span>
+      <span className="task__checkbox"/>
       <p className={classes.join(' ')}>{todo.title}</p>
       <div className="task__container">
         <span className="task__date">{date}</span>
@@ -23,7 +23,7 @@ function TodoItem({ todo, onToggle, onDeleteTask }) {
           className="button button_del"
           type="button"
           onClick={() => onDeleteTask(todo.id)}
-        ></button>
+        />
       </div>
     </div>
   );

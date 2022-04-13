@@ -10,8 +10,8 @@ const PRIORITY = {
 function App() {
   return (
     <div className="todo">
-      <PriorityBlock priority={PRIORITY.HIGH} />
-      <PriorityBlock priority={PRIORITY.LOW} />
+      <PriorityBlock priority={PRIORITY.HIGH}/>
+      <PriorityBlock priority={PRIORITY.LOW}/>
     </div>
   );
 }

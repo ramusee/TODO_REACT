@@ -1,17 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
 
-function TodoForm({ onInputValue }) {
+function TodoForm({onHandleAddTodo, priority}) {
   const [inputValue, setInputValue] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
-    onInputValue(e.target[0].value);
+    onHandleAddTodo(e.target[0].value, priority);
     setInputValue('');
   }
+
   function onChange(e) {
     setInputValue(e.target.value);
   }
+
   return (
     <form className="todo__add-task" onSubmit={handleSubmit}>
       <input
@@ -21,7 +23,7 @@ function TodoForm({ onInputValue }) {
         value={inputValue}
         onChange={onChange}
       />
-      <input className="button button_add" type="submit" value="" />
+      <input className="button button_add" type="submit" value=""/>
     </form>
   );
 }
