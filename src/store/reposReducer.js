@@ -5,22 +5,17 @@ const initialState = storage.getTodos()
 export default function reposReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
-      const newState = [...state, {
+      return [...state, {
         id: action.id,
         priority: action.priority,
+        date: action.date,
         title: action.title,
         completed: false,
       }]
-      storage.saveTodos(newState)
-      return newState
     case REMOVE_TODO:
-      const _newState = state.filter(todo => todo.id !== action.id)
-      storage.saveTodos(_newState)
-      return _newState
+      return state.filter(todo => todo.id !== action.id)
     case TOGGLE_TODO:
-      const __newState = state.map(todo => todo.id === action.id ? {...todo, completed: !todo.completed} : todo)
-      storage.saveTodos(__newState)
-      return __newState
+      return state.map(todo => todo.id === action.id ? {...todo, completed: !todo.completed} : todo)
     default:
       return state
   }

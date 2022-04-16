@@ -1,28 +1,30 @@
 import React from 'react';
-import {format} from 'date-fns';
+import {removeTodo, toggleTodo} from "../store/actions";
+import {useDispatch} from "react-redux";
 
-function TodoItem({todo, onToggle, onDeleteTask}) {
+function TodoItem({todo}) {
+  const dispatch = useDispatch()
   const classes = ['task__text'];
   if (todo.completed) {
-    classes.push('todo__task_done');
+    classes.push('todo__task_done')
   }
-  const date = format(new Date(), 'dd.MM.yyyy');
+
   return (
     <div className="todo__task">
       <input
         className="task__check-input"
         type="checkbox"
-        onChange={() => onToggle(todo.id)}
+        onChange={() => dispatch(toggleTodo(todo.id))}
         checked={todo.completed}
       />
       <span className="task__checkbox"/>
       <p className={classes.join(' ')}>{todo.title}</p>
       <div className="task__container">
-        <span className="task__date">{date}</span>
+        <span className="task__date">{todo.date}</span>
         <button
           className="button button_del"
           type="button"
-          onClick={() => onDeleteTask(todo.id)}
+          onClick={() => dispatch(removeTodo(todo.id))}
         />
       </div>
     </div>

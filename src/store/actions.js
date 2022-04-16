@@ -4,16 +4,16 @@ const ADD_TODO = 'ADD_TODO'
 const REMOVE_TODO = 'REMOVE_TODO'
 const TOGGLE_TODO = 'TOGGLE_TODO'
 
-console.log(storage.getTodos())
-const lastItemStorage = storage.getTodos().at(-1)
-let id = lastItemStorage ? lastItemStorage.id + 1 : 1
+const lastItemStorageId = storage.getTodos().at(-1)
+let id = lastItemStorageId ? lastItemStorageId.id + 1 : 1
 
-function addTodo(title, priority) {
+function addTodo(title, priority, date) {
   return {
     type: ADD_TODO,
     id: id++,
     priority,
-    title
+    date,
+    title,
   }
 }
 
